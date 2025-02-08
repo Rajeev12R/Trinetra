@@ -20,10 +20,10 @@ import Spinner from "./Spinner";
 
 const MoodChart = () => {
   const [moodData, setMoodData] = useState([]);
-  const [chartType, setChartType] = useState("bar"); // Default chart type
-  const [loading, setLoading] = useState(true); // Loading state
+  const [chartType, setChartType] = useState("bar"); 
+  const [loading, setLoading] = useState(true); 
 
-  // Fetch mood data from the server
+
   useEffect(() => {
     axios
       .get("http://localhost:3000/mood-stats")
@@ -164,7 +164,7 @@ const MoodChart = () => {
       </div>
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <Spinner/> {/* Optional: Add a loading spinner */}
+          <Spinner/> 
         </div>
       ) : (
         <ResponsiveContainer width="100%" height={400}>

@@ -4,19 +4,19 @@ import cors from 'cors';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
 
-dotenv.config(); // Load API key from .env
+dotenv.config(); 
 
 const app = express();
-const PORT = 3000; // Must match frontend request URL
+const PORT = 3000;
 
-app.use(express.json()); // Parse JSON requests
-app.use(cors()); // Allow frontend to access backend
+app.use(express.json());
+app.use(cors());
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("MongoDB Connection Error:", err));
 
-// Conversation Schema
+
 const conversationSchema = new mongoose.Schema({
     userMessage: String,
     botReply: String,
@@ -25,10 +25,10 @@ const conversationSchema = new mongoose.Schema({
 });
 const Conversation = mongoose.model("Conversation", conversationSchema);
 
-const API_KEY = process.env.API_KEY; // Store API key in .env
+const API_KEY = process.env.API_KEY; 
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
 
-// Mood Analysis Function
+
 const analyzeMood = (message) => {
     const moodKeywords = {
         happy: [
@@ -98,7 +98,7 @@ const analyzeMood = (message) => {
             return mood;
         }
     }
-    return "neutral"; // Default mood if no keywords match
+    return "neutral"; 
 };
 
 app.post('/chat', async (req, res) => {
@@ -111,7 +111,6 @@ app.post('/chat', async (req, res) => {
 
         const mood = analyzeMood(message);
 
-        // Define a caring prompt
         const prompt = `
         You are Serenity, a compassionate and empathetic mental health chatbot designed to provide emotional support and practical self-care advice. Your personality is warm, non-judgmental, and encouraging, like a caring friend or mentor. Your goal is to help users feel heard, validated, and empowered to take small steps toward emotional well-being.
         

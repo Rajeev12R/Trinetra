@@ -3,7 +3,7 @@ import { motion, useAnimation } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Register GSAP plugins
+
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
@@ -12,7 +12,7 @@ const Hero = () => {
   const controls = useAnimation();
 
   useEffect(() => {
-    // GSAP animation for text
+
     gsap.from(textRef.current, {
       opacity: 0,
       y: 50,
@@ -21,7 +21,7 @@ const Hero = () => {
       delay: 0.5,
     });
 
-    // GSAP animation for the image
+
     gsap.from(imageRef.current, {
       opacity: 0,
       x: -100,
@@ -30,7 +30,7 @@ const Hero = () => {
       delay: 0.8,
     });
 
-    // ScrollTrigger animation for the hero section
+
     gsap.from('.hero-section', {
       opacity: 0,
       y: 50,
@@ -44,7 +44,7 @@ const Hero = () => {
       },
     });
 
-    // Framer Motion animation for buttons
+
     controls.start({
       opacity: 1,
       y: 0,
@@ -72,11 +72,11 @@ const Hero = () => {
         />
       </div>
 
-      {/* Right Side - Text and Buttons */}
+
       <div className="mb-20 mt-40 px-4 sm:max-w-xl md:max-w-full md:px-24 lg:ml-auto lg:max-w-screen-md lg:px-8">
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="max-w-xl text-center lg:max-w-lg lg:pr-5 lg:text-left">
-            {/* Main Heading */}
+
             <motion.h2
               ref={textRef}
               className="mb-6 max-w-lg text-3xl leading-snug tracking-tight text-teal-600 sm:text-5xl sm:leading-snug"
@@ -90,7 +90,7 @@ const Hero = () => {
               of the Future
             </motion.h2>
 
-            {/* Subtitle */}
+
             <motion.p
               className="text-base text-teal-700"
               initial={{ opacity: 0, y: 50 }}
@@ -100,7 +100,7 @@ const Hero = () => {
               Your mental health matters. Chat with an AI that provides personalized health recommendations.
             </motion.p>
 
-            {/* Buttons */}
+
             <motion.div
               className="mt-8 flex flex-col justify-center sm:flex-row sm:items-center sm:space-x-4 lg:justify-start"
               initial={{ opacity: 0, y: 50 }}

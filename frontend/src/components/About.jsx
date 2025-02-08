@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { TextPlugin } from 'gsap/TextPlugin';
 import video from '../assets/about.mp4';
 
-// Register GSAP plugins
+
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const About = () => {
@@ -13,7 +13,7 @@ const About = () => {
   const listRefs = useRef([]);
 
   useEffect(() => {
-    // GSAP animation for text content
+
     gsap.from(textRef.current, {
       opacity: 0,
       y: 50,
@@ -22,7 +22,6 @@ const About = () => {
       delay: 0.5,
     });
 
-    // GSAP animation for video
     gsap.from(videoRef.current, {
       opacity: 0,
       x: 100,
@@ -31,7 +30,6 @@ const About = () => {
       delay: 0.8,
     });
 
-    // ScrollTrigger animation for the about section
     gsap.from('.about-section', {
       opacity: 0,
       y: 50,
@@ -45,17 +43,16 @@ const About = () => {
       },
     });
 
-    // Typing animation for list items
     listRefs.current.forEach((item, index) => {
-      const text = item.textContent; // Get the text content of the list item
-      item.textContent = ''; // Clear the text content for the typing effect
+      const text = item.textContent; 
+      item.textContent = ''; 
 
       gsap.to(item, {
         duration: 1,
-        delay: 1 + index * 0.5, // Staggered delay for each list item
+        delay: 1 + index * 0.5, 
         text: {
           value: text,
-          speed: 1, // Typing speed
+          speed: 1, 
         },
         ease: 'none',
       });
@@ -105,7 +102,7 @@ const About = () => {
             </ul>
           </div>
 
-          {/* Right Side - Video */}
+
           <div
             ref={videoRef}
             className="h-[500px] flex items-center justify-center p-6"

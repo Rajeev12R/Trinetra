@@ -8,16 +8,16 @@ const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [isListening, setIsListening] = useState(false);
-  const chatBoxRef = useRef(null); // Ref for the chat box element
+  const chatBoxRef = useRef(null); 
 
-  // GSAP animations on component mount
+
   useEffect(() => {
     gsap.to("#navbar", { duration: 1, opacity: 1, y: 0, ease: "power3.out" });
     gsap.to("#hero", { duration: 1, opacity: 1, scale: 1, ease: "power3.out", delay: 0.5 });
     gsap.to("#chatButton", { y: -5, repeat: -1, yoyo: true, duration: 1, ease: "power1.inOut" });
   }, []);
 
-  // Toggle chat visibility
+
   const toggleChat = useCallback(() => {
     if (!chatOpen) {
       gsap.to("#chatContainer", { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" });
@@ -29,7 +29,7 @@ const Chat = () => {
     }
   }, [chatOpen]);
 
-  // Send message to the server
+
   const sendMessage = useCallback(async (message) => {
     if (!message.trim()) return;
 
@@ -55,7 +55,7 @@ const Chat = () => {
     }
   }, []);
 
-  // Handle Enter key press
+
   const handleKeyPress = useCallback((event) => {
     if (event.key === 'Enter') {
       sendMessage(inputValue);
@@ -63,7 +63,7 @@ const Chat = () => {
     }
   }, [inputValue, sendMessage]);
 
-  // Start voice recognition
+
   const startListening = useCallback(() => {
     if (!('webkitSpeechRecognition' in window)) {
       alert('Speech Recognition is not supported in this browser.');
@@ -101,12 +101,12 @@ const Chat = () => {
     recognition.start();
   }, [sendMessage]);
 
-  // Stop voice recognition
+
   const stopListening = useCallback(() => {
     setIsListening(false);
   }, []);
 
-  // Handle microphone key press (e.g., 'm' key)
+
   const handleMicKeyPress = useCallback((event) => {
     if (event.key === 'M') {
       if (isListening) {
@@ -117,7 +117,7 @@ const Chat = () => {
     }
   }, [isListening, startListening, stopListening]);
 
-  // Add global keydown event listener for microphone
+
   useEffect(() => {
     document.addEventListener('keydown', handleMicKeyPress);
     return () => {
@@ -125,12 +125,12 @@ const Chat = () => {
     };
   }, [handleMicKeyPress]);
 
-  // Handle predefined chat options
+
   const handlePredefinedMessage = useCallback((message) => {
     sendMessage(message);
   }, [sendMessage]);
 
-  // Auto-scroll to the bottom of the chat box when messages change
+
   useEffect(() => {
     if (chatBoxRef.current) {
       chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
@@ -164,7 +164,7 @@ const Chat = () => {
         </div>
         <div
           id="chatBox"
-          ref={chatBoxRef} // Attach the ref to the chat box
+          ref={chatBoxRef} 
           className="h-96 overflow-y-auto flex flex-col p-4 space-y-2 border-b border-gray-300"
         >
           {messages.map((msg, index) => (
