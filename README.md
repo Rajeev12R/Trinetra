@@ -1,10 +1,5 @@
-Here's a well-styled, professional **README.md** for your **Serenity - AI Mental Health Chatbot** with visually appealing formatting, diagrams, and flowcharts. It follows modern documentation trends, making it engaging and easy to read.  
 
-Let me know if you want any modifications! 🚀  
-
----
-
-### 🧘‍♂️ **Serenity - AI Mental Health Chatbot**  
+## 🧘‍♂️ **Serenity - AI Mental Health Chatbot**  
 *A Compassionate AI-Powered Companion for Mental Well-Being*  
 
 ![Serenity Banner](https://source.unsplash.com/1600x400/?mental-health,chatbot)  
