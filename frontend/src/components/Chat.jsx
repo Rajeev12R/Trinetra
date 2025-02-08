@@ -37,7 +37,7 @@ const Chat = () => {
     setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     try {
-      const res = await fetch("http://localhost:3000/chat", {
+      const res = await fetch("https://trinetra-tfo7.vercel.app/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message })

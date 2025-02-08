@@ -26,7 +26,7 @@ const MoodChart = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/mood-stats")
+      .get("https://trinetra-tfo7.vercel.app/mood-stats")
       .then((response) => {
         const formattedData = response.data.map((mood) => ({
           mood: mood._id.charAt(0).toUpperCase() + mood._id.slice(1),
