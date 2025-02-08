@@ -1,21 +1,116 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
+  const textRef = useRef(null);
+  const imageRef = useRef(null);
+  const controls = useAnimation();
+
+  useEffect(() => {
+    // GSAP animation for text
+    gsap.from(textRef.current, {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      ease: 'power3.out',
+      delay: 0.5,
+    });
+
+    // GSAP animation for the image
+    gsap.from(imageRef.current, {
+      opacity: 0,
+      x: -100,
+      duration: 1.5,
+      ease: 'power3.out',
+      delay: 0.8,
+    });
+
+    // ScrollTrigger animation for the hero section
+    gsap.from('.hero-section', {
+      opacity: 0,
+      y: 50,
+      duration: 1.5,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.hero-section',
+        start: 'top 80%',
+        end: 'bottom 20%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // Framer Motion animation for buttons
+    controls.start({
+      opacity: 1,
+      y: 0,
+      transition: { duration: 1, delay: 1.5 },
+    });
+  }, [controls]);
+
   return (
-    <div className="h-screen lg:flex">
+    <motion.div
+      className="hero-section h-screen lg:flex"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.75 }}
+    >
+      {/* Left Side - Image */}
       <div className="relative my-auto hidden h-full bg-green-50 text-green-600 lg:block lg:w-3/12 xl:w-5/12">
-        <img className="h-full w-full object-cover" src="https://plus.unsplash.com/premium_photo-1682023587356-86065925727a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHJvYm90JTIwd2l0aCUyMHBhdGllbnR8ZW58MHx8MHx8fDA%3D" alt="" />
+        <motion.img
+          ref={imageRef}
+          className="h-full w-full object-cover"
+          src="https://plus.unsplash.com/premium_photo-1682023587356-86065925727a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHJvYm90JTIwd2l0aCUyMHBhdGllbnR8ZW58MHx8MHx8fDA%3D"
+          alt="AI Mental Health"
+          initial={{ opacity: 0, x: -100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1.5, delay: 0.8 }}
+        />
       </div>
+
+      {/* Right Side - Text and Buttons */}
       <div className="mb-20 mt-40 px-4 sm:max-w-xl md:max-w-full md:px-24 lg:ml-auto lg:max-w-screen-md lg:px-8">
         <div className="flex flex-col items-center justify-between lg:flex-row">
           <div className="max-w-xl text-center lg:max-w-lg lg:pr-5 lg:text-left">
-            <h2 className="mb-6 max-w-lg text-3xl leading-snug tracking-tight text-teal-600 sm:text-5xl sm:leading-snug">
-              <span className="my-1 inline-block font-serif font-bold text-teal-600">AI Mental Health model</span>
-              of the future
-            </h2>
-            <p className="text-base text-teal-700">Your mental health matters. Chat a being who recommends you a good health.</p>
-            <div className="mt-8 flex flex-col justify-center sm:flex-row sm:items-center sm:space-x-4 lg:justify-start">
-              <button className="relative mt-4 rounded-lg border-2 border-teal-600 bg-teal-600 px-6 py-2 font-medium text-white transition hover:translate-y-1">
+            {/* Main Heading */}
+            <motion.h2
+              ref={textRef}
+              className="mb-6 max-w-lg text-3xl leading-snug tracking-tight text-teal-600 sm:text-5xl sm:leading-snug"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, delay: 0.5 }}
+            >
+              <span className="my-1 inline-block font-serif font-bold text-teal-600">
+                AI Mental Health Model
+              </span>
+              of the Future
+            </motion.h2>
+
+            {/* Subtitle */}
+            <motion.p
+              className="text-base text-teal-700"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5, delay: 0.7 }}
+            >
+              Your mental health matters. Chat with an AI that provides personalized health recommendations.
+            </motion.p>
+
+            {/* Buttons */}
+            <motion.div
+              className="mt-8 flex flex-col justify-center sm:flex-row sm:items-center sm:space-x-4 lg:justify-start"
+              initial={{ opacity: 0, y: 50 }}
+              animate={controls}
+            >
+              <motion.button
+                className="relative mt-4 rounded-lg border-2 border-teal-600 bg-teal-600 px-6 py-2 font-medium text-white transition hover:translate-y-1"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <div className="absolute left-0 -bottom-10 hidden h-10 w-10 -rotate-12 -scale-x-100 text-green-600 md:inline-flex">
                   <svg viewBox="0 0 82 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fillRule="evenodd" clipRule="evenodd" d="M0 21.3963C0.189514 19.1422 0.475057 16.717 0.554355 14.2852C0.582363 13.435 0.32301 12.6326 1.24839 12.1517C1.43863 12.053 1.7169 11.8956 1.85767 11.9661C4.2446 13.1626 6.90906 13.1934 9.41312 13.8814C11.09 14.3423 12.6519 15.089 13.7134 16.5797C13.9251 16.8774 13.9105 17.3427 14 17.7305C13.6228 17.8077 13.2227 18.01 12.8727 17.9421C10.3283 17.4477 7.78825 16.9245 5.25946 16.353C4.46612 16.1737 4.32244 16.4862 4.22859 17.1961C4.0118 18.8342 3.66769 20.4541 3.43198 22.0899C3.33086 22.7891 3.36905 23.509 3.35123 24.2197C3.34977 24.2791 3.44107 24.3474 3.43052 24.3989C3.32213 24.9318 3.2712 25.8796 3.07114 25.9142C2.49387 26.0144 1.77655 25.8915 1.25603 25.5961C-0.352473 24.6832 0.143681 23.0129 0 21.3963Z" fill="currentColor" />
@@ -23,18 +118,22 @@ const Hero = () => {
                   </svg>
                 </div>
                 Try for free
-              </button>
-              <button className="mt-4 flex items-center justify-center rounded-lg border-2 border-green-600 px-6 py-2 font-medium text-teal-600 transition hover:translate-y-1 hover:bg-white">
+              </motion.button>
+              <motion.button
+                className="mt-4 flex items-center justify-center rounded-lg border-2 border-green-600 px-6 py-2 font-medium text-teal-600 transition hover:translate-y-1 hover:bg-white"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
                 <svg xmlns="http://www.w3.org/2000/svg" className="mr-2 h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l3-2z" clipRule="evenodd" />
                 </svg>
                 Watch the demo
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

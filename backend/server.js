@@ -31,13 +31,67 @@ const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-
 // Mood Analysis Function
 const analyzeMood = (message) => {
     const moodKeywords = {
-        happy: ["happy", "excited", "great", "amazing", "joyful", "awesome"],
-        sad: ["sad", "down", "unhappy", "depressed", "cry", "tear"],
-        anxious: ["anxious", "nervous", "worried", "overthinking", "scared"],
-        stressed: ["stressed", "pressure", "tired", "burnout", "exhausted"],
-        lonely: ["lonely", "alone", "isolated", "nobody", "empty"],
-        neutral: ["okay", "fine", "normal", "meh", "alright"]
-    };
+        happy: [
+            "happy", "excited", "great", "amazing", "joyful", "awesome", "cheerful", "delighted", "content", "pleased",
+            "ecstatic", "euphoric", "thrilled", "elated", "radiant", "overjoyed", "gleeful", "lively", "enthusiastic", "grateful",
+            "satisfied", "sunny", "bubbly", "upbeat", "optimistic", "smiling", "hopeful", "bright", "jubilant", "festive"
+        ],
+        sad: [
+            "sad", "down", "unhappy", "depressed", "cry", "tear", "miserable", "melancholy", "gloomy", "heartbroken",
+            "sorrowful", "despair", "blue", "weeping", "lost", "hopeless", "mournful", "desolate", "grieving", "upset",
+            "lonely", "pessimistic", "mourn", "tearful", "disheartened", "hurt", "aching", "low", "woeful", "wretched"
+        ],
+        anxious: [
+            "anxious", "nervous", "worried", "overthinking", "scared", "uneasy", "fearful", "jittery", "stressed", "panicked",
+            "restless", "trembling", "shaky", "apprehensive", "paranoid", "distressed", "agitated", "doubtful", "hesitant", "tense",
+            "unsettled", "dizzy", "overwhelmed", "frantic", "perturbed", "troubled", "self-conscious", "hyperventilate", "shaken", "uptight"
+        ],
+        stressed: [
+            "stressed", "pressure", "tired", "burnout", "exhausted", "overworked", "tense", "frustrated", "fatigued", "drained",
+            "overwhelmed", "worried", "nervous", "strained", "chaotic", "anxious", "burdened", "swamped", "irritated", "uneasy",
+            "panicked", "frenzied", "on edge", "shattered", "frazzled", "frantic", "agitated", "dizzy", "trapped", "helpless"
+        ],
+        lonely: [
+            "lonely", "alone", "isolated", "nobody", "empty", "abandoned", "neglected", "forsaken", "disconnected", "forgotten",
+            "invisible", "solitary", "deserted", "hopeless", "friendless", "alienated", "outcast", "unnoticed", "ignored", "secluded",
+            "detached", "estranged", "miserable", "melancholy", "excluded", "adrift", "forlorn", "downcast", "unloved", "homesick"
+        ],
+        neutral: [
+            "okay", "fine", "normal", "meh", "alright", "average", "indifferent", "casual", "so-so", "balanced",
+            "moderate", "calm", "mild", "decent", "stable", "relaxed", "unbothered", "steady", "not bad", "neutral",
+            "okayish", "regular", "bland", "ordinary", "unremarkable", "level-headed", "plain", "unchanged", "unmoved", "typical"
+        ],
+        angry: [
+            "angry", "mad", "furious", "rage", "frustrated", "annoyed", "irritated", "resentful", "agitated", "offended",
+            "hostile", "outraged", "livid", "seething", "fuming", "infuriated", "exasperated", "cross", "bitter", "provoked",
+            "irate", "wrathful", "heated", "vexed", "spiteful", "upset", "displeased", "boiling", "enraged", "stormy"
+        ],
+        loved: [
+            "loved", "cherished", "adored", "cared", "romantic", "affectionate", "passionate", "intimate", "devoted", "warm",
+            "tender", "attached", "appreciated", "secure", "close", "special", "treasured", "blessed", "connected", "trusting",
+            "bonded", "dear", "fond", "devoted", "protected", "heartfelt", "embraced", "valued", "admired", "sweet"
+        ],
+        hopeful: [
+            "hopeful", "optimistic", "motivated", "inspired", "determined", "confident", "positive", "reassured", "encouraged", "ambitious",
+            "aspiring", "expectant", "brave", "dreamy", "upbeat", "cheerful", "bright", "visionary", "rejuvenated", "courageous",
+            "driven", "uplifted", "renewed", "goal-oriented", "empowered", "zealous", "aspirational", "trusting", "assured", "secure"
+        ],
+        embarrassed: [
+            "embarrassed", "awkward", "shy", "humiliated", "self-conscious", "flustered", "nervous", "anxious", "ashamed", "mortified",
+            "blushing", "uneasy", "timid", "flushed", "fidgety", "hesitant", "apprehensive", "insecure", "guilty", "bashful",
+            "self-aware", "exposed", "clumsy", "fumbling", "unsure", "red-faced", "nervy", "unnerved", "reserved", "sheepish"
+        ],
+        surprised: [
+            "surprised", "shocked", "astonished", "amazed", "startled", "dumbfounded", "flabbergasted", "bewildered", "stunned", "aghast",
+            "speechless", "baffled", "perplexed", "shaken", "overwhelmed", "unbelievable", "astounded", "taken aback", "wide-eyed", "in awe",
+            "jaw-dropped", "disoriented", "flustered", "mind-blown", "gasping", "gobsmacked", "dazed", "unexpected", "thunderstruck", "upended"
+        ],
+        jealous: [
+            "jealous", "envious", "insecure", "possessive", "covetous", "resentful", "spiteful", "longing", "bitter", "grudging",
+            "territorial", "green-eyed", "suspicious", "competitive", "clingy", "desiring", "obsessive", "paranoid", "distrustful", "yearning",
+            "needy", "pining", "begrudging", "greedy", "self-doubting", "frustrated", "wary", "possessiveness", "ego-driven", "mistrustful"
+        ]
+    };    
 
     for (const [mood, keywords] of Object.entries(moodKeywords)) {
         if (keywords.some(word => message.toLowerCase().includes(word))) {

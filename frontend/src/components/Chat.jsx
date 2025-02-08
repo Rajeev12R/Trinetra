@@ -108,7 +108,7 @@ const Chat = () => {
 
   // Handle microphone key press (e.g., 'm' key)
   const handleMicKeyPress = useCallback((event) => {
-    if (event.key === 'm' || event.key === 'M') {
+    if (event.key === 'M') {
       if (isListening) {
         stopListening();
       } else {
