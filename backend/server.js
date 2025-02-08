@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import cors from 'cors';
 import fetch from 'node-fetch';
 import dotenv from 'dotenv';
@@ -11,8 +12,40 @@ const PORT = 3000; // Must match frontend request URL
 app.use(express.json()); // Parse JSON requests
 app.use(cors()); // Allow frontend to access backend
 
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("Connected to MongoDB"))
+    .catch(err => console.error("MongoDB Connection Error:", err));
+
+// Conversation Schema
+const conversationSchema = new mongoose.Schema({
+    userMessage: String,
+    botReply: String,
+    mood: String,
+    timestamp: { type: Date, default: Date.now }
+});
+const Conversation = mongoose.model("Conversation", conversationSchema);
+
 const API_KEY = process.env.API_KEY; // Store API key in .env
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`;
+
+// Mood Analysis Function
+const analyzeMood = (message) => {
+    const moodKeywords = {
+        happy: ["happy", "excited", "great", "amazing", "joyful", "awesome"],
+        sad: ["sad", "down", "unhappy", "depressed", "cry", "tear"],
+        anxious: ["anxious", "nervous", "worried", "overthinking", "scared"],
+        stressed: ["stressed", "pressure", "tired", "burnout", "exhausted"],
+        lonely: ["lonely", "alone", "isolated", "nobody", "empty"],
+        neutral: ["okay", "fine", "normal", "meh", "alright"]
+    };
+
+    for (const [mood, keywords] of Object.entries(moodKeywords)) {
+        if (keywords.some(word => message.toLowerCase().includes(word))) {
+            return mood;
+        }
+    }
+    return "neutral"; // Default mood if no keywords match
+};
 
 app.post('/chat', async (req, res) => {
     try {
@@ -21,6 +54,8 @@ app.post('/chat', async (req, res) => {
         if (!message) {
             return res.status(400).json({ error: 'Message is required' });
         }
+
+        const mood = analyzeMood(message);
 
         // Define a caring prompt
         const prompt = `
@@ -74,6 +109,7 @@ app.post('/chat', async (req, res) => {
         - Be concise but impactful—aim for 2-3 sentences per response unless the user needs more in-depth support.  
         
         User: ${message}
+        User's mood: ${mood}
         `;
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -91,10 +127,23 @@ app.post('/chat', async (req, res) => {
         const data = await response.json();
         const botReply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm not sure.";
 
-        res.json({ reply: botReply });
+        const newConversation = new Conversation({ userMessage: message, botReply, mood });
+        await newConversation.save();
+
+        res.json({ reply: botReply, mood });
     } catch (error) {
         console.error('Request Error:', error.message);
         res.status(500).json({ reply: "Sorry, something went wrong!" });
+    }
+});
+
+app.get('/history', async (req, res) => {
+    try {
+        const conversations = await Conversation.find().sort({ timestamp: -1 }).limit(10);
+        res.json(conversations);
+    } catch (error) {
+        console.error('History Error:', error.message);
+        res.status(500).json({ error: "Could not fetch conversation history" });
     }
 });
 
