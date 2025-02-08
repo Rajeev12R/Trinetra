@@ -147,4 +147,17 @@ app.get('/history', async (req, res) => {
     }
 });
 
+app.get('/mood-stats', async (req, res) => {
+    try {
+        const moodCounts = await Conversation.aggregate([
+            { $group: { _id: "$mood", count: { $sum: 1 } } }
+        ]);
+        res.json(moodCounts);
+    } catch (error) {
+        console.error('Mood Stats Error:', error.message);
+        res.status(500).json({ error: "Could not fetch mood statistics" });
+    }
+});
+
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
