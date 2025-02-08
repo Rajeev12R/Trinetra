@@ -3,7 +3,7 @@ import React from 'react';
 const Footer = () => {
   return (
     <footer className="">
-      <div className="mx-auto grid max-w-screen-xl gap-y-8 gap-x-12 px-4 py-10 sm:px-20 md:grid-cols-2 xl:grid-cols-4 xl:px-10">
+      <div className="mx-auto grid max-w-screen-xl gap-y-8 gap-x-16 px-4 py-10 sm:px-20 md:grid-cols-2 xl:grid-cols-3 xl:px-10">
         <div className="max-w-sm">
           <div className="mb-6 flex h-10 items-center space-x-2">
             <img className="h-full object-contain" src="/images/logo-circle.png" alt="" />
@@ -33,15 +33,6 @@ const Footer = () => {
               <li><a className="hover:text-teal-600 hover:underline" href="#">Contact</a></li>
             </ul>
           </nav>
-        </div>
-        <div className="">
-          <div className="mt-4 mb-2 font-medium xl:mb-4">Subscribe to our Newsletter</div>
-          <div className="flex flex-col">
-            <div className="mb-4">
-              <input type="email" className="focus:outline mb-2 block h-14 w-full rounded-xl bg-gray-200 px-4 sm:w-80 focus:outline-none focus:ring-1 focus:ring-blue-600" placeholder="Enter your email" />
-              <button className="block rounded-xl bg-teal-600 px-6 py-3 font-medium text-white">Subscribe</button>
-            </div>
-          </div>
         </div>
       </div>
       <div className="border-t">
