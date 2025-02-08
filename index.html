@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-100">
+    <button id="chatButton" onclick="toggleChat()" 
+        class="fixed bottom-5 right-5 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">
+        Chat
+    </button>
+
+    <div id="chatContainer" class="hidden fixed bottom-16 max-w-[90vw] w-screen bg-white shadow-lg rounded-lg flex flex-col">
+        <div class="flex justify-between items-center bg-blue-500 text-white p-3 rounded-t-lg">
+            <span>Chatbot</span>
+            <button onclick="toggleChat()" class="text-white">✖</button>
+        </div>
+        <div id="chatBox" class="h-96 overflow-y-auto flex flex-col p-4 space-y-2 border-b border-gray-300"></div>
+        
+        <div class="flex p-3 border-t border-gray-300">
+            <input type="text" id="userInput" placeholder="Type a message..." 
+                class="flex-1 p-2 border border-gray-300 rounded-md outline-none" 
+                onkeydown="handleKeyPress(event)" />
+            <button onclick="sendMessage()" 
+                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-all">
+                Send
+            </button>
+            <button onclick="startListening()" 
+                class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-md transition-all">
+                <i class="fa-solid fa-microphone"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
