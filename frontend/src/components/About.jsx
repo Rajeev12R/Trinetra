@@ -72,7 +72,6 @@ const About = () => {
           About Serenity
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Text Content */}
           <div className="bg-black p-8 lg:p-16 text-left rounded-lg shadow-lg">
             <span className="text-sm font-medium text-gray-400 mb-4 block">
               MENTAL HEALTH AI COMPANION
