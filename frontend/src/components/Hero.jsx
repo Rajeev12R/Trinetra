@@ -59,7 +59,6 @@ const Hero = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1.75 }}
     >
-      {/* Left Side - Image */}
       <div className="relative my-auto hidden h-full bg-green-50 text-green-600 lg:block lg:w-3/12 xl:w-5/12">
         <motion.img
           ref={imageRef}
