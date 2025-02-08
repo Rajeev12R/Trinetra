@@ -2,42 +2,89 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chatbot</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Guru Chatbot</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
-<body class="flex items-center justify-center h-screen bg-gray-100">
-    <button id="chatButton" onclick="toggleChat()" 
-        class="fixed bottom-5 right-5 bg-blue-500 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-600">
-        Chat
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="bg-white shadow-md fixed w-full top-0 left-0 z-50 opacity-0">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <a href="#" class="text-teal-600 font-bold text-2xl flex items-center">
+                <i class="fa-solid fa-heart-pulse text-red-500 mr-2"></i> Health Guru
+            </a>
+            <ul class="hidden md:flex space-x-10 text-gray-700 text-lg">
+                <li><a href="#" class="hover:text-teal-500 transition-all">Home</a></li>
+                <li><a href="#" class="hover:text-teal-500 transition-all">Services</a></li>
+                <li><a href="#" class="hover:text-teal-500 transition-all">About</a></li>
+                <li><a href="#" class="hover:text-teal-500 transition-all">Contact</a></li>
+            </ul>
+            <div class="flex items-center space-x-2">
+                <a href="#"
+                    class="hidden md:block bg-teal-600 text-white px-5 py-2 rounded-lg shadow-md hover:bg-teal-700 transition-all">
+                    Get Help Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Spacing for Navbar -->
+    <div class="h-16"></div>
+
+    <!-- Hero Section -->
+    <section id="hero" class="text-center py-20 bg-gradient-to-r from-teal-100 to-blue-200 h-screen opacity-0 scale-90">
+        <h1 class="text-4xl font-bold text-teal-700">Your Mental Health Matters</h1>
+        <p class="mt-4 text-gray-700 text-lg">Find support, resources, and expert guidance for your well-being.</p>
+        <a href="#"
+            class="mt-6 inline-block bg-teal-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition-all">
+            Get Started
+        </a>
+    </section>
+
+    <!-- Chat Button -->
+    <button id="chatButton"
+        class="fixed bottom-5 right-5 bg-teal-600 text-white px-5 py-3 rounded-full shadow-lg hover:bg-teal-500 text-lg flex items-center transition-all">
+        <i class="fa-solid fa-comment-dots mr-2"></i> Chat
     </button>
 
-    <div id="chatContainer" class="hidden fixed bottom-16 max-w-[90vw] w-screen bg-white shadow-lg rounded-lg flex flex-col">
-        <div class="flex justify-between items-center bg-blue-500 text-white p-3 rounded-t-lg">
-            <span>Chatbot</span>
-            <button onclick="toggleChat()" class="text-white">✖</button>
+    <!-- Chat Container -->
+    <div id="chatContainer"
+        class="hidden fixed bottom-20 right-5 max-w-[90vw] bg-white shadow-lg rounded-lg flex flex-col opacity-0 translate-y-10">
+        <div class="flex justify-between items-center bg-teal-600 text-white p-3 rounded-t-lg">
+            <span>HealthGuru</span>
+            <button id="closeChat" class="text-white">✖</button>
         </div>
         <div id="chatBox" class="h-96 overflow-y-auto flex flex-col p-4 space-y-2 border-b border-gray-300"></div>
-        
+        <!-- Predefined Chat Options -->
+        <div id="chatOptions" class="p-3 overflow-x-auto whitespace-nowrap">
+            <button onclick="sendPredefinedMessage('Hello! How are you feeling today?')"
+                class="bg-teal-600 text-white px-3 py-1 rounded-md mr-2">Hello! How are you feeling today?</button>
+            <button onclick="sendPredefinedMessage('What’s up? How is it going?')"
+                class="bg-teal-600 text-white px-3 py-1 rounded-md mr-2">What’s up? How is it going?</button>
+            <button onclick="sendPredefinedMessage('Give me some health advice today?')"
+                class="bg-teal-600 text-white px-3 py-1 rounded-md">Give me some health advice today?</button>
+        </div>
         <div class="flex p-3 border-t border-gray-300">
-            <input type="text" id="userInput" placeholder="Type a message..." 
-                class="flex-1 p-2 border border-gray-300 rounded-md outline-none" 
-                onkeydown="handleKeyPress(event)" />
-            <button onclick="sendMessage()" 
-                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-all">
+            <input type="text" id="userInput" placeholder="Type a message..."
+                class="flex-1 p-2 border border-gray-300 rounded-md outline-none" onkeydown="handleKeyPress(event)" />
+            <button onclick="sendMessage()"
+                class="ml-2 bg-teal-600 hover:bg-bg-teal-500 text-white px-4 py-2 rounded-md transition-all">
                 Send
             </button>
-            <button onclick="startListening()" 
-                class="ml-2 bg-blue-600 text-white px-4 py-2 rounded-md transition-all">
+            <button onclick="startListening()" class="ml-2 bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-md transition-all">
                 <i class="fa-solid fa-microphone"></i>
             </button>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="animation.js"></script>
+
 </body>
 
 </html>

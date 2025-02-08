@@ -10,6 +10,7 @@ async function sendMessage() {
 
     appendMessage("You: " + message, "user");
     inputField.value = "";
+    removeTypingIndicator(); // Ensure only one indicator at a time
     showTypingIndicator();
 
     try {
@@ -23,7 +24,7 @@ async function sendMessage() {
         appendMessage("HealthGuru: " + data.reply, "HealthGuru");
     } catch (error) {
         removeTypingIndicator();
-        appendMessage("Bot: Sorry, something went wrong!", "bot");
+        appendMessage("HealthGuru: Sorry, something went wrong!", "bot");
     }
 }
 
@@ -45,6 +46,7 @@ function handleKeyPress(event) {
 }
 
 function showTypingIndicator() {
+    removeTypingIndicator(); // Prevent duplicate indicators
     let chatBox = document.getElementById("chatBox");
     let div = document.createElement("div");
     div.id = "typingIndicator";
@@ -61,7 +63,9 @@ function removeTypingIndicator() {
 
 function scrollToBottom() {
     let chatBox = document.getElementById("chatBox");
-    chatBox.scrollTop = chatBox.scrollHeight;
+    setTimeout(() => {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }, 50); // Allow time for DOM updates
 }
 
 function startListening() {
@@ -75,20 +79,17 @@ function startListening() {
     recognition.interimResults = false;
     recognition.lang = 'en-US';
 
-    // Show "Listening..." Indicator
-    let chatBox = document.getElementById("chatBox");
-    let listeningIndicator = document.createElement("div");
-    listeningIndicator.id = "listeningIndicator";
-    listeningIndicator.textContent = "🎙️ Listening...";
-    listeningIndicator.className = "self-start bg-yellow-300 text-black p-2 rounded-lg italic text-sm";
-    chatBox.appendChild(listeningIndicator);
-    scrollToBottom();
+    showListeningIndicator();
 
     recognition.onresult = function (event) {
-        let transcript = event.results[0][0].transcript;
-        document.getElementById("userInput").value = transcript; // Fill input with recognized text
+        let transcript = event.results[0][0].transcript.trim();
+        if (transcript) {
+            document.getElementById("userInput").value = transcript;
+            sendMessage();
+        } else {
+            appendMessage("HealthGuru: Sorry, I couldn't hear you clearly.", "HealthGuru");
+        }
         removeListeningIndicator();
-        sendMessage(); // Send message automatically after recognition
     };
 
     recognition.onerror = function () {
@@ -103,7 +104,22 @@ function startListening() {
     recognition.start();
 }
 
+function showListeningIndicator() {
+    let chatBox = document.getElementById("chatBox");
+    let div = document.createElement("div");
+    div.id = "listeningIndicator";
+    div.textContent = "🎙️ Listening...";
+    div.className = "self-start bg-yellow-300 text-black p-2 rounded-lg italic text-sm";
+    chatBox.appendChild(div);
+    scrollToBottom();
+}
+
 function removeListeningIndicator() {
     let indicator = document.getElementById("listeningIndicator");
     if (indicator) indicator.remove();
+}
+
+function sendPredefinedMessage(message) {
+    document.getElementById("userInput").value = message;
+    sendMessage();
 }
