@@ -21,10 +21,10 @@ async function sendMessage() {
         });
         const data = await res.json();
         removeTypingIndicator();
-        appendMessage("HealthGuru: " + data.reply, "HealthGuru");
+        appendMessage("Serenity: " + data.reply, "Serenity");
     } catch (error) {
         removeTypingIndicator();
-        appendMessage("HealthGuru: Sorry, something went wrong!", "bot");
+        appendMessage("Serenity: Sorry, something went wrong!", "bot");
     }
 }
 
@@ -50,7 +50,7 @@ function showTypingIndicator() {
     let chatBox = document.getElementById("chatBox");
     let div = document.createElement("div");
     div.id = "typingIndicator";
-    div.textContent = "HealthGuru is typing...";
+    div.textContent = "Serenity is typing...";
     div.className = "self-start bg-gray-200 text-black p-2 rounded-lg italic text-sm";
     chatBox.appendChild(div);
     scrollToBottom();
@@ -87,14 +87,14 @@ function startListening() {
             document.getElementById("userInput").value = transcript;
             sendMessage();
         } else {
-            appendMessage("HealthGuru: Sorry, I couldn't hear you clearly.", "HealthGuru");
+            appendMessage("Serenity: Sorry, I couldn't hear you clearly.", "Serenity");
         }
         removeListeningIndicator();
     };
 
     recognition.onerror = function () {
         removeListeningIndicator();
-        appendMessage("HealthGuru: Voice recognition error!", "HealthGuru");
+        appendMessage("Serenity: Voice recognition error!", "Serenity");
     };
 
     recognition.onend = function () {
