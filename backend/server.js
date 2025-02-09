@@ -33,12 +33,12 @@ const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-
 const analyzeMood = (message) => {
     const moodKeywords = {
         happy: [
-            "happy", "excited", "great", "amazing", "joyful", "awesome", "cheerful", "delighted", "content", "pleased",
+            "fine", "normal", "meh", "alright","happy", "excited", "great", "amazing", "joyful", "awesome", "cheerful", "delighted", "content", "pleased",
             "ecstatic", "euphoric", "thrilled", "elated", "radiant", "overjoyed", "gleeful", "lively", "enthusiastic", "grateful",
             "satisfied", "sunny", "bubbly", "upbeat", "optimistic", "smiling", "hopeful", "bright", "jubilant", "festive"
         ],
         sad: [
-            "sad", "down", "unhappy", "depressed", "cry", "tear", "miserable", "melancholy", "gloomy", "heartbroken",
+            "fine", "normal", "meh","sad", "down", "unhappy", "depressed", "cry", "tear", "miserable", "melancholy", "gloomy", "heartbroken",
             "sorrowful", "despair", "blue", "weeping", "lost", "hopeless", "mournful", "desolate", "grieving", "upset",
             "lonely", "pessimistic", "mourn", "tearful", "disheartened", "hurt", "aching", "low", "woeful", "wretched"
         ],
